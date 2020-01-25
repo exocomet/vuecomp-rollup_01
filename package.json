@@ -1,0 +1,19 @@
+{
+  "name": "vuecomp-rollup_01",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "vue": "^2.6.11",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "devDependencies": {
+    "rollup": "^1.29.1",
+    "rollup-plugin-copy": "^3.3.0",
+    "rollup-plugin-vue": "^5.1.6"
+  }
+}
