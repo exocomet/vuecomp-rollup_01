@@ -226,11 +226,15 @@
         },
         addItem() {
           console.log('App.addItem');
-          let newItem = {
-            uid: this.items[this.items.length-1],
-            name: 'Item '+(parseInt(this.items[this.items.length-1].name.split(' ')[1])+1)
-          };
-          this.items.push(newItem);
+          let newItem = {};
+          if (this.items.length === 0) {
+            newItem.uid = 0;
+            newItem.name = 'Item 0';
+          } else {
+            let lastItem = this.items[this.items.length - 1];
+            newItem.uid = lastItem.uid + 1;
+            newItem.name = 'Item ' + (lastItem.uid + 1);
+          }      this.items.push(newItem);
         },
       },
       data() {
@@ -238,10 +242,10 @@
           name: 'Jane Doe',
           items: [{
             uid: 0,
-            name: 'Item 1'
+            name: 'Item 0'
           }, {
             uid: 1,
-            name: 'Item 2'
+            name: 'Item 1'
           }]
         }
       }
@@ -255,37 +259,10 @@
       var _vm = this;
       var _h = _vm.$createElement;
       var _c = _vm._self._c || _h;
-      return _c("div", [
+      return _c("div", { staticClass: "full" }, [
         _c("h1", [_vm._v("Hello " + _vm._s(_vm.name))]),
         _vm._v(" "),
-        _c("div", { staticClass: "flex two" }, [
-          _c(
-            "div",
-            _vm._l(_vm.items, function(item, index) {
-              return _c("div", { key: index }, [
-                _c("article", { staticClass: "card" }, [
-                  _c("header", [_c("h3", [_vm._v(_vm._s(item.name))])]),
-                  _vm._v(" "),
-                  _c(
-                    "footer",
-                    [
-                      _c("nicebutton", {
-                        attrs: { title: "Delete" },
-                        on: {
-                          clickEvent: function($event) {
-                            return _vm.removeItem(index)
-                          }
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ])
-              ])
-            }),
-            0
-          ),
-          _vm._v(" "),
+        _c("div", { staticClass: "flex two demo" }, [
           _c(
             "div",
             [
@@ -296,10 +273,37 @@
                     return _vm.addItem()
                   }
                 }
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.items, function(item, index) {
+                return _c("div", { key: index }, [
+                  _c("article", { staticClass: "card" }, [
+                    _c("header", [_c("h3", [_vm._v(_vm._s(item.name))])]),
+                    _vm._v(" "),
+                    _c(
+                      "footer",
+                      [
+                        _c("nicebutton", {
+                          attrs: { title: "Delete" },
+                          on: {
+                            clickEvent: function($event) {
+                              return _vm.removeItem(index)
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                ])
               })
             ],
-            1
-          )
+            2
+          ),
+          _vm._v(" "),
+          _c("div", [
+            _c("pre", [_vm._v(_vm._s(JSON.stringify(_vm.items, null, 2)))])
+          ])
         ])
       ])
     };
@@ -309,11 +313,11 @@
       /* style */
       const __vue_inject_styles__$1 = function (inject) {
         if (!inject) return
-        inject("data-v-17497180_0", { source: "\n.card footer[data-v-17497180] {padding: .2em .8em;}\r\n", map: {"version":3,"sources":["C:\\code\\jsplayground\\vuecomp-rollup_01\\src\\App.vue"],"names":[],"mappings":";AA6DA,+BAAA,kBAAA,CAAA","file":"App.vue","sourcesContent":["<template>\r\n  <div>\r\n    <h1>Hello {{ name }}</h1>\r\n    <div class=\"flex two\">\r\n      <div>\r\n        <div v-for=\"(item, index) in items\" v-bind:key=\"index\">\r\n          <article class=\"card\">\r\n            <header>\r\n              <h3>{{item.name}}</h3>\r\n            </header>\r\n            <footer>\r\n              <nicebutton v-bind:title=\"'Delete'\" v-on:clickEvent=\"removeItem(index)\">\r\n              </nicebutton>\r\n            </footer>\r\n          </article>\r\n        </div>\r\n      </div>\r\n      <div>\r\n        <nicebutton title=\"Add item\" v-on:clickEvent=\"addItem()\"></nicebutton>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</template>\r\n\r\n<script>\r\nimport nicebutton from './NiceButton.vue'\r\n\r\nexport default {\r\n  components: {\r\n    nicebutton\r\n  },\r\n  methods: {\r\n    removeItem(index) {\r\n      console.log('App.removeItem', index);\r\n      this.$delete(this.items, index)\r\n    },\r\n    addItem() {\r\n      console.log('App.addItem');\r\n      let newItem = {\r\n        uid: this.items[this.items.length-1],\r\n        name: 'Item '+(parseInt(this.items[this.items.length-1].name.split(' ')[1])+1)\r\n      };\r\n      this.items.push(newItem);\r\n    },\r\n  },\r\n  data() {\r\n    return {\r\n      name: 'Jane Doe',\r\n      items: [{\r\n        uid: 0,\r\n        name: 'Item 1'\r\n      }, {\r\n        uid: 1,\r\n        name: 'Item 2'\r\n      }]\r\n    }\r\n  }\r\n}\r\n</script>\r\n\r\n<style scoped>\r\n.card footer {padding: .2em .8em;}\r\n</style>"]}, media: undefined });
+        inject("data-v-740bb860_0", { source: "\n.card footer[data-v-740bb860] {\r\n  padding: .2em .8em;\n}\r\n", map: {"version":3,"sources":["C:\\code\\jsplayground\\vuecomp-rollup_01\\src\\App.vue"],"names":[],"mappings":";AAmEA;EACA,kBAAA;AACA","file":"App.vue","sourcesContent":["<template>\r\n  <div class=\"full\">\r\n    <h1>Hello {{ name }}</h1>\r\n    <div class=\"flex two demo\">\r\n      <div>\r\n        <nicebutton title=\"Add item\" v-on:clickEvent=\"addItem()\"></nicebutton>\r\n        <div v-for=\"(item, index) in items\" v-bind:key=\"index\">\r\n          <article class=\"card\">\r\n            <header>\r\n              <h3>{{item.name}}</h3>\r\n            </header>\r\n            <footer>\r\n              <nicebutton v-bind:title=\"'Delete'\" v-on:clickEvent=\"removeItem(index)\">\r\n              </nicebutton>\r\n            </footer>\r\n          </article>\r\n        </div>\r\n      </div>\r\n      <div>\r\n        <pre>{{JSON.stringify(items, null, 2)}}</pre>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</template>\r\n\r\n<script>\r\nimport nicebutton from './NiceButton.vue'\r\n\r\nexport default {\r\n  components: {\r\n    nicebutton\r\n  },\r\n  methods: {\r\n    removeItem(index) {\r\n      console.log('App.removeItem', index);\r\n      this.$delete(this.items, index)\r\n    },\r\n    addItem() {\r\n      console.log('App.addItem');\r\n      let newItem = {};\r\n      if (this.items.length === 0) {\r\n        newItem.uid = 0;\r\n        newItem.name = 'Item 0';\r\n      } else {\r\n        let lastItem = this.items[this.items.length - 1];\r\n        newItem.uid = lastItem.uid + 1;\r\n        newItem.name = 'Item ' + (lastItem.uid + 1);\r\n      };\r\n      this.items.push(newItem);\r\n    },\r\n  },\r\n  data() {\r\n    return {\r\n      name: 'Jane Doe',\r\n      items: [{\r\n        uid: 0,\r\n        name: 'Item 0'\r\n      }, {\r\n        uid: 1,\r\n        name: 'Item 1'\r\n      }]\r\n    }\r\n  }\r\n}\r\n</script>\r\n\r\n<style scoped>\r\n.card footer {\r\n  padding: .2em .8em;\r\n}\r\n</style>"]}, media: undefined });
 
       };
       /* scoped */
-      const __vue_scope_id__$1 = "data-v-17497180";
+      const __vue_scope_id__$1 = "data-v-740bb860";
       /* module identifier */
       const __vue_module_identifier__$1 = undefined;
       /* functional template */

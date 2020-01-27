@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div class="full">
     <h1>Hello {{ name }}</h1>
-    <div class="flex two">
+    <div class="flex two demo">
       <div>
+        <nicebutton title="Add item" v-on:clickEvent="addItem()"></nicebutton>
         <div v-for="(item, index) in items" v-bind:key="index">
           <article class="card">
             <header>
@@ -16,7 +17,7 @@
         </div>
       </div>
       <div>
-        <nicebutton title="Add item" v-on:clickEvent="addItem()"></nicebutton>
+        <pre>{{JSON.stringify(items, null, 2)}}</pre>
       </div>
     </div>
   </div>
@@ -36,9 +37,14 @@ export default {
     },
     addItem() {
       console.log('App.addItem');
-      let newItem = {
-        uid: this.items[this.items.length-1],
-        name: 'Item '+(parseInt(this.items[this.items.length-1].name.split(' ')[1])+1)
+      let newItem = {};
+      if (this.items.length === 0) {
+        newItem.uid = 0;
+        newItem.name = 'Item 0';
+      } else {
+        let lastItem = this.items[this.items.length - 1];
+        newItem.uid = lastItem.uid + 1;
+        newItem.name = 'Item ' + (lastItem.uid + 1);
       };
       this.items.push(newItem);
     },
@@ -48,10 +54,10 @@ export default {
       name: 'Jane Doe',
       items: [{
         uid: 0,
-        name: 'Item 1'
+        name: 'Item 0'
       }, {
         uid: 1,
-        name: 'Item 2'
+        name: 'Item 1'
       }]
     }
   }
@@ -59,5 +65,7 @@ export default {
 </script>
 
 <style scoped>
-.card footer {padding: .2em .8em;}
+.card footer {
+  padding: .2em .8em;
+}
 </style>
